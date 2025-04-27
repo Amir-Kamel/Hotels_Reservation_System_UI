@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-const baseURL = process.env.REACT_APP_API_BASE_URL || "http://127.0.0.1:8000";
-
 const axiosInstance = axios.create({
-    baseURL: baseURL,
+    baseURL: "https://hotelsreservationsystemapi-production.up.railway.app/",
     headers: {
         'Content-Type': 'application/json',
         // 'Authorization': `Bearer ${token}`
@@ -33,7 +31,7 @@ axiosInstance.interceptors.response.use(
             try {
                 const refresh = localStorage.getItem('refresh');
                 if (refresh) {
-                    const response = await axios.post(`${baseURL}/accounts/login/refresh/`, {
+                    const response = await axios.post('https://hotelsreservationsystemapi-production.up.railway.app/accounts/login/refresh/', {
                         refresh: refresh,
                     });
                     localStorage.setItem('access', response.data.access);
