@@ -1,9 +1,6 @@
 import axios from 'axios';
 
-// Dynamically set the base URL based on the environment
-const baseURL = process.env.NODE_ENV === 'production' 
-  ? "https://hotelsreservationsystemapi-production.up.railway.app/" 
-  : "http://127.0.0.1:8000";
+const baseURL = process.env.REACT_APP_API_BASE_URL || "http://127.0.0.1:8000";
 
 const axiosInstance = axios.create({
     baseURL: baseURL,
@@ -24,6 +21,7 @@ axiosInstance.interceptors.request.use((config) => {
 }, (error) => {
     return Promise.reject(error);
 });
+
 
 axiosInstance.interceptors.response.use(
     (response) => response,
@@ -60,4 +58,8 @@ axiosInstance.interceptors.response.use(
     }
 );
 
+
 export default axiosInstance;
+
+
+
