@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+// Dynamically set the base URL based on the environment
+const baseURL = process.env.NODE_ENV === 'production' 
+  ? "https://hotelsreservationsystemapi-production.up.railway.app/" 
+  : "http://127.0.0.1:8000";
+
 const axiosInstance = axios.create({
-    baseURL: "http://127.0.0.1:8000",
+    baseURL: baseURL,
     headers: {
         'Content-Type': 'application/json',
         // 'Authorization': `Bearer ${token}`
@@ -20,7 +25,6 @@ axiosInstance.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
-
 axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
@@ -31,7 +35,7 @@ axiosInstance.interceptors.response.use(
             try {
                 const refresh = localStorage.getItem('refresh');
                 if (refresh) {
-                    const response = await axios.post('http://127.0.0.1:8000/accounts/login/refresh/', {
+                    const response = await axios.post(`${baseURL}/accounts/login/refresh/`, {
                         refresh: refresh,
                     });
                     localStorage.setItem('access', response.data.access);
@@ -56,8 +60,4 @@ axiosInstance.interceptors.response.use(
     }
 );
 
-
 export default axiosInstance;
-
-
-
