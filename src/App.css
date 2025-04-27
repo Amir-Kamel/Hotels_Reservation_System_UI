@@ -1,0 +1,14 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-link {
+  transition: transform 0.5s ease-in-out;
+  display: inline-block;
+}
+
+.footer-link:hover {
+  transform: scale(1.2);
+}

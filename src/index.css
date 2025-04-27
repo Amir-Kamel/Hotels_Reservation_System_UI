@@ -1,0 +1,109 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    
+}
+
+:root {
+    --bs-primary: #CD9A5E;
+    --bs-secondary: #8A8A8A;
+    --bs-success: #B45F3A;
+    --bs-info: #E8DFD5;
+    --bs-light: #F9F5F1;
+    --bs-dark: #1A1A1A;
+  
+    --bs-body-bg: #F9F5F1;
+    --bs-body-color: #1A1A1A;
+    --bs-link-color: #CD9A5E;
+  }
+ 
+.bg-primary   , .btn-primary {
+    background-color: var(--bs-primary) !important;
+}
+
+.text-primary {
+    color: var(--bs-primary) !important;
+}
+
+.border-primary {
+    border-color: var(--bs-primary) !important;
+}
+
+.bg-secondary {
+    background-color: var(--bs-secondary) !important;
+}
+
+.text-secondary {
+    color: var(--bs-secondary) !important;
+}
+
+.bg-success {
+    background-color: var(--bs-success) !important;
+}
+
+.text-success {
+    color: var(--bs-success) !important;
+}
+
+.bg-info {
+    background-color: var(--bs-info) !important;
+}
+
+.text-info {
+    color: var(--bs-info) !important;
+}
+
+.bg-light {
+    background-color: var(--bs-light) !important;
+}
+
+.text-light {
+    color: var(--bs-light) !important;
+}
+
+.bg-dark {
+    background-color: var(--bs-dark) !important;
+}
+
+.text-dark {
+    color: var(--bs-dark) !important;
+}
+
+.bg-body {
+    background-color: var(--bs-body-bg) !important;
+}
+
+.text-body {
+    color: var(--bs-body-color) !important;
+}
+
+a {
+    color: var(--bs-link-color) !important;
+}
+
+a:hover,
+a:focus {
+    color: var(--bs-primary) !important;
+}
+
+.breadcrumb {
+    background-color: var(--bs-light); /* لون الخلفية */
+    border-radius: 0.25rem; /* زوايا مستديرة */
+    padding: 0.5rem 1rem; /* تباعد داخلي */
+    font-size: 1rem; /* حجم النص */
+}
+
+.breadcrumb-item a {
+    color: var(--bs-primary); /* لون الروابط */
+    text-decoration: none; /* إزالة التسطير */
+    transition: color 0.2s ease-in-out; /* تأثير عند التمرير */
+}
+
+.breadcrumb-item a:hover {
+    color: var(--bs-success); /* لون الروابط عند التمرير */
+}
+
+.breadcrumb-item.active {
+    color: var(--bs-secondary); /* لون النص النشط */
+}
