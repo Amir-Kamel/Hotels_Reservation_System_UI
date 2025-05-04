@@ -39,7 +39,7 @@ function Login() {
           <input
             type="text"
             className="form-control"
-            placeholder="Username"
+            placeholder="admin"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
@@ -47,7 +47,7 @@ function Login() {
           <input
             type="password"
             className="form-control"
-            placeholder="Password"
+            placeholder="admin"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
