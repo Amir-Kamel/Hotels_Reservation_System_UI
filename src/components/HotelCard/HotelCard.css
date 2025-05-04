@@ -1,0 +1,31 @@
+.hotel-card {
+  width: 25%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.hotel-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.hotel-card h3 {
+  margin-bottom: 12px;
+  color: #2c3e50;
+  font-size: 1.5rem;
+}
+
+.hotel-card p {
+  margin: 6px 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.hotel-card strong {
+  color: #333;
+}

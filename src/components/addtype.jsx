@@ -55,20 +55,37 @@ const AddType = () => {
     return Object.keys(errors).length === 0;
   };
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+    
+  //   if (validateForm()) {
+  //     setIsSubmitting(true);
+  //     dispatch(createtype(roomType))
+  //       .then(() => {
+  //         navigate(`/hotels/details/${hotel_id}`);
+  //       })
+  //       .catch(() => {
+  //         setIsSubmitting(false);
+  //       });
+  //   }
+  // };
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+  
     if (validateForm()) {
       setIsSubmitting(true);
       dispatch(createtype(roomType))
+        .unwrap()
         .then(() => {
-          navigate("/");
+          navigate(`/hotels/detail/${hotel_id}`);
         })
-        .catch(() => {
+        .catch((err) => {
+          console.error("Failed to create room type:", err);
           setIsSubmitting(false);
         });
     }
   };
+  
 
   return (
     <div className="add-type-container">

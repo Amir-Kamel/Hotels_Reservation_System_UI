@@ -81,10 +81,11 @@ const AboutUs = () => {
 
         <section style={{ textAlign: 'center', margin: '2rem 0' }}>
           <h2 style={{ color: '#CD9A5E', marginBottom: '1.5rem' }}>Ready to Find Your Perfect Stay?</h2>
-          <Link to="/" style={{ 
-            backgroundColor: '#CD9A5E', 
-            color: '#F9F5F1', 
+          <Link to="/hotels" style={{ 
+            backgroundColor: '#CD9A5E !important', 
+            color: '#CD9A5E !important', 
             padding: '0.8rem 2rem', 
+            border:'1px solid  #CD9A5E',
             borderRadius: '4px', 
             textDecoration: 'none',
             display: 'inline-block',

@@ -1,0 +1,70 @@
+.user-card {
+  background-color: #f9f5f1; /* Soft off-white */
+  border: 1px solid #e8dfd5; /* Light beige */
+  border-radius: 16px;
+  padding: 20px;
+  margin: 10px; /* Reduced margin between cards */
+  width: 45% !important; /* Wider card */
+  box-shadow: 0 4px 10px rgba(26, 26, 26, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 16px rgba(26, 26, 26, 0.2);
+  background-color: #fdfbf9; /* Slight hover lighten */
+}
+
+.user-card-content {
+  padding: 12px;
+  color: #1a1a1a;
+}
+
+.user-card-title {
+  font-size: 1.7rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #cd9a5e; /* Warm brownish title color */
+}
+
+.user-card p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 4px 0; /* tighter spacing between lines */
+  color: #8a8a8a; /* Soft gray text */
+}
+
+.user-card p strong {
+  font-weight: bold;
+  color: #b45f3a; /* Accent color for labels */
+}
+
+.status {
+  font-weight: bold;
+  text-transform: capitalize;
+  margin-top: 8px;
+}
+
+/* Status colors */
+.status.active {
+  color: #4caf50;
+}
+
+.status.inactive {
+  color: #f44336;
+}
+
+.status.pending {
+  color: #ff9800;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .user-card {
+    width: 100%;
+    padding: 15px;
+  }
+  .user-card-title {
+    font-size: 1.5rem;
+  }
+}

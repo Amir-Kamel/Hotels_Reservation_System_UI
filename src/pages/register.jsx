@@ -1,123 +1,183 @@
-// import React, { useState, useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { createUser, editUser } from "../store/slices/accounts"; // adjust the path
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createUser } from "../store/slices/accounts";
+import "./RegisterUserForm.css";
+import { useNavigate } from "react-router-dom";
 
-// const RegisterUserForm = ({ existingUser = null, onSuccess }) => {
-//   const dispatch = useDispatch();
-//   const { loading, error } = useSelector((state) => state.accounts);
+const RegisterUserForm = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.accounts);
 
-//   const [formData, setFormData] = useState({
-//     username: "",
-//     email: "",
-//     phone: "",
-//     password: "",
-//     role: "customer",
-//   });
+  const [formErrors, setFormErrors] = useState({});
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    phone: "",
+    password: "",
+    password2: "",
+    role: "customer",
+  });
 
-//   useEffect(() => {
-//     if (existingUser) {
-//       setFormData({
-//         username: existingUser.username || "",
-//         email: existingUser.email || "",
-//         phone: existingUser.phone || "",
-//         password: "", // Don't prefill password
-//         role: existingUser.role || "customer",
-//       });
-//     }
-//   }, [existingUser]);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
 
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData((prev) => ({
-//       ...prev,
-//       [name]: value,
-//     }));
-//   };
+    if (formErrors[name]) {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: null,
+      }));
+    }
+  };
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     if (existingUser) {
-//       // Update existing user
-//       dispatch(editUser({ id: existingUser.id, data: formData }))
-//         .unwrap()
-//         .then(() => {
-//           if (onSuccess) onSuccess();
-//         });
-//     } else {
-//       // Create new user
-//       dispatch(createUser(formData))
-//         .unwrap()
-//         .then(() => {
-//           setFormData({
-//             username: "",
-//             email: "",
-//             phone: "",
-//             password: "",
-//             role: "customer",
-//           });
-//           if (onSuccess) onSuccess();
-//         });
-//     }
-//   };
+  const validateForm = () => {
+    const errors = {};
 
-//   return (
-//     <div>
-//       <h2>{existingUser ? "Edit User" : "Register New User"}</h2>
-//       <form onSubmit={handleSubmit}>
+    if (!formData.username) errors.username = "Username is required";
+    if (!formData.email) errors.email = "Email is required";
+    if (!formData.phone) errors.phone = "Phone is required";
+    if (!formData.password) errors.password = "Password is required";
+    if (formData.password !== formData.password2) errors.password2 = "Passwords do not match";
+    setFormErrors(errors);
 
-//         <input 
-//           type="text" 
-//           name="username" 
-//           placeholder="Username"
-//           value={formData.username} 
-//           onChange={handleChange}
-//           required 
-//         />
+    return Object.keys(errors).length === 0;
+  };
 
-//         <input 
-//           type="email" 
-//           name="email" 
-//           placeholder="Email"
-//           value={formData.email} 
-//           onChange={handleChange}
-//           required 
-//         />
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+    try {
+      await dispatch(createUser(formData)).unwrap();
+      setFormData({
+        username: "",
+        email: "",
+        phone: "",
+        password: "",
+        password2: "",
+      });
+      setFormErrors({});
+      navigate("/login");
+    }
+    catch(error){
+      console.error("Server error:", error);
+      if (error && typeof error === 'object') {
+        const serverErrors = {};
+        for (const key in error) {
+          serverErrors[key] = error[key][0];
+        }
+        setFormErrors(serverErrors);
+      }
+      console.log("the form errors is ----- ",formErrors)
+    }
+  };
+  
 
-//         <input 
-//           type="text" 
-//           name="phone" 
-//           placeholder="Phone"
-//           value={formData.phone} 
-//           onChange={handleChange}
-//         />
+  return (
+    <div className="register-form-container bg-cream p-4 rounded shadow">
+      <h2 className="form-title text-dark mb-3">Register New User</h2>
+      <form onSubmit={handleSubmit} className="register-form">
 
-//         {/* Only show password input when creating a user */}
-//         {!existingUser && (
-//           <input 
-//             type="password" 
-//             name="password" 
-//             placeholder="Password"
-//             value={formData.password} 
-//             onChange={handleChange}
-//             required 
-//           />
-//         )}
+        {/* Username */}
+        <div className="mb-2">
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            className={`form-control ${formErrors.username ? "is-invalid" : ""}`}
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+          {formErrors.username && (
+            <small className="text-danger">{formErrors.username}</small>
+          )}
+        </div>
 
-//         <select name="role" value={formData.role} onChange={handleChange}>
-//           <option value="customer">Customer</option>
-//           <option value="hotel_staff">Hotel Staff</option>
-//           <option value="hotel_owner">Hotel Owner</option>
-//           <option value="admin">Admin</option>
-//         </select>
+        {/* Email */}
+        <div className="mb-2">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            className={`form-control ${formErrors.email ? "is-invalid" : ""}`}
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          {formErrors.email && (
+            <small className="text-danger">{formErrors.email}</small>
+          )}
+        </div>
 
-//         <button type="submit" disabled={loading}>
-//           {loading ? (existingUser ? "Updating..." : "Registering...") : (existingUser ? "Update User" : "Register")}
-//         </button>
+        {/* Phone */}
+        <div className="mb-2">
+          <input
+            type="text"
+            name="phone"
+            placeholder="Phone"
+            className={`form-control ${formErrors.phone ? "is-invalid" : ""}`}
+            value={formData.phone}
+            onChange={handleChange}
+          />
+          {formErrors.phone && (
+            <small className="text-danger">{formErrors.phone}</small>
+          )}
+        </div>
 
-//         {error && <p style={{ color: 'red' }}>{error}</p>}
-//       </form>
-//     </div>
-//   );
-// };
+        {/* Password */}
+        <div className="mb-2">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            className={`form-control ${formErrors.password ? "is-invalid" : ""}`}
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          {formErrors.password && (
+            <small className="text-danger">{formErrors.password}</small>
+          )}
+        </div>
 
-// export default RegisterUserForm;
+        {/* Confirm Password */}
+        <div className="mb-2">
+          <input
+            type="password"
+            name="password2"
+            placeholder="Confirm Password"
+            className={`form-control ${formErrors.password2 ? "is-invalid" : ""}`}
+            value={formData.password2}
+            onChange={handleChange}
+            required
+          />
+          {formErrors.password2 && (
+            <small className="text-danger">{formErrors.password2}</small>
+          )}
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="btn btn-primary-custom w-100"
+          disabled={loading}
+        >
+          {loading ? "Registering..." : "Register User"}
+        </button>
+
+        {/* Non-field errors */}
+        {formErrors.general && (
+          <div className="alert alert-warning text-center mt-3">
+            {formErrors.general}
+          </div>
+        )}
+      </form>
+    </div>
+  );
+};
+
+export default RegisterUserForm;

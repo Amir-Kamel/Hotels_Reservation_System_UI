@@ -1,0 +1,47 @@
+/* RegisterUserForm.css */
+
+.bg-cream {
+  background-color: #f9f5f1;
+}
+
+.text-dark {
+  color: #1a1a1a;
+}
+
+.form-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.btn-primary-custom {
+  background-color: #cd9a5e;
+  border: none;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary-custom:hover {
+  background-color: #b45f3a;
+}
+
+.form-control,
+.form-select {
+  border-radius: 0.5rem;
+  border: 1px solid #e8dfd5;
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+.form-control::placeholder,
+.form-select {
+  color: #8a8a8a;
+}
+
+.register-form-container {
+  max-width: 500px;
+  margin: 50px auto;
+}
+
+.shadow {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

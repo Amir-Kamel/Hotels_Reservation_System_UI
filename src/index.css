@@ -1,9 +1,11 @@
+@import "bootstrap-icons/font/bootstrap-icons.css";
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     
 }
+
 
 :root {
     --bs-primary: #CD9A5E;
@@ -17,7 +19,9 @@
     --bs-body-color: #1A1A1A;
     --bs-link-color: #CD9A5E;
   }
- 
+ .btn-color {
+  background-color: var(--bs-info) !important;
+ }
 .bg-primary   , .btn-primary {
     background-color: var(--bs-primary) !important;
 }
@@ -79,31 +83,281 @@
 }
 
 a {
-    color: var(--bs-link-color) !important;
+    color: var(--bs-primary) !important;
 }
+.text-color {
+    color: var(--bs-info) !important;
+}
+ 
 
 a:hover,
 a:focus {
-    color: var(--bs-primary) !important;
+    color: var(--bs-info) !important;
 }
 
 .breadcrumb {
-    background-color: var(--bs-light); /* لون الخلفية */
-    border-radius: 0.25rem; /* زوايا مستديرة */
-    padding: 0.5rem 1rem; /* تباعد داخلي */
-    font-size: 1rem; /* حجم النص */
+    background-color: var(--bs-light); 
+    border-radius: 0.25rem; 
+    padding: 0.5rem 1rem; 
+    font-size: 1rem; 
 }
 
 .breadcrumb-item a {
-    color: var(--bs-primary); /* لون الروابط */
-    text-decoration: none; /* إزالة التسطير */
-    transition: color 0.2s ease-in-out; /* تأثير عند التمرير */
+    color: var(--bs-primary);
+    text-decoration: none; 
+    transition: color 0.2s ease-in-out; 
 }
 
 .breadcrumb-item a:hover {
-    color: var(--bs-success); /* لون الروابط عند التمرير */
+    color: var(--bs-success); 
 }
 
 .breadcrumb-item.active {
-    color: var(--bs-secondary); /* لون النص النشط */
+    color: var(--bs-secondary); 
+}
+/* Cover Section */
+.cover-section {
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0.5)
+      ),
+      url("./assests/bedroom-with-view-city-skyline.jpg") no-repeat center center/cover;
+    height: 1000px;
+  }
+  
+  /* Swiper Styles */
+  .swiper {
+  width: 100%;
+  height: auto;
+  padding: 20px 0;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--bs-primary) !important;
+}
+.hotel-card {
+  border: none;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.hotel-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hotel-card .card-title {
+  color: var(--bs-primary);
+}
+
+.hotel-card .card-text {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+  
+  /* Section Background */
+  .mb-5.bg-light {
+    background-color: #f8f9fa !important;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+ 
+.top-hotels-section{
+    background-color: #f8f9fa !important;
+}
+
+/* Why Us Section */
+.whyusSection {
+  background-color: #e8dfd5;
+  padding: 3rem 0;
+}
+
+.whyusSection .section-title {
+  color: #333;
+}
+
+.feature-card {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.icon-circle {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: var(--bs-primary);
+  color: white;
+}
+
+.icon-circle i {
+  font-size: 2rem;
+}
+.feature-card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+/* Customer Reviews Section */
+.customer-reviews-section {
+    background-color: #f8f9fa !important;
+  }
+  
+  .review-card {
+    border: none;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    background-color: #e8dfd5;
+  }
+  
+  .review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .review-card img {
+    border: 3px solid #e8dfd5;
+  }
+  
+  .review-card .card-text {
+    font-size: 0.9rem;
+    color: #6c757d;
+  }
+  .customer-reviews-section{
+    background-color:black;
+  }
+@media (max-width: 768px) {
+  .feature-card {
+    margin-bottom: 20px;
+  }
+  .review-card {
+
+    padding: 1rem;  }
+}
+
+/* Custom Header Styling */
+.custom-header {
+  background-color: var(--bs-primary); /* Use primary color from the palette */
+  height: 100px; /* Increase the height */
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.custom-header .navbar-brand {
+  font-size: 2rem; /* Larger font size for the brand */
+  font-weight: bold;
+  color: var(--bs-light); /* Light color for the brand text */
+}
+
+.custom-header .nav-link {
+  font-size: 1.1rem; /* Slightly larger font size for links */
+  font-weight: 500;
+  color: var(--bs-light); /* Light color for the links */
+  transition: color 0.3s ease-in-out;
+}
+
+.custom-header .nav-link:hover {
+  color: var(--bs-info); /* Change to info color on hover */
+}
+
+.custom-header .btn-primary {
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: var(--bs-success); /* Use success color for the login button */
+  border: none;
+}
+
+.custom-header .btn-primary:hover {
+  background-color: var(--bs-secondary); /* Change to secondary color on hover */
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%280, 0, 0, 0.5%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Optional: Add spacing and alignment for the login button */
+.navbar-nav .btn {
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.navbar-nav .btn:hover {
+  background-color: var(--bs-secondary); /* Change background color on hover */
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Booking Details Styling */
+.booking-details {
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--bs-dark);
+}
+
+.booking-title {
+  color: var(--bs-primary);
+  font-weight: bold;
+}
+
+.booking-card {
+  max-width: 800px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--bs-primary);
+}
+
+.booking-card .card-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.booking-card .card-body {
+  padding: 1.5rem;
+  background-color: var(--bs-light);
+}
+
+.booking-card .card-footer {
+  padding: 1.5rem;
+  background-color: var(--bs-info);
+  border-top: 1px solid var(--bs-primary);
+}
+
+.badge {
+  font-size: 0.9rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 5px;
+}
+
+.booking-btn {
+  background-color: var(--bs-primary);
+  color: white;
+  font-weight: bold;
+  padding: 0.6rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.booking-btn:hover {
+  background-color: var(--bs-secondary);
+  color: white;
 }

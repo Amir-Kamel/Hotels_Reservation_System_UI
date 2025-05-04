@@ -1,0 +1,79 @@
+.booking-card {
+  width: 30% !important; /* Made wider */
+  background-color: #f9f5f1; /* Off-White/Cream */
+  border: 1px solid #e8dfd5; /* Light Beige border */
+  border-radius: 16px;
+  padding: 20px;
+  margin: 10px; /* Reduced margin for tighter spacing */
+  box-shadow: 0 4px 10px rgba(26, 26, 26, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column !important;
+  overflow: wrap;
+}
+
+.booking-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 16px rgba(26, 26, 26, 0.2);
+}
+
+.booking-image {
+  width: 100%;
+  height: 220px; /* slightly taller for better proportion */
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+@media (min-width: 768px) {
+  .booking-card {
+    flex-direction: row;
+    width: 100%; /* Full width on larger screens */
+  }
+
+  .booking-image {
+    width: 250px;
+    height: 100%;
+    margin-bottom: 0;
+    margin-right: 20px;
+  }
+}
+
+.booking-details {
+  flex: 1;
+  color: #1a1a1a;
+}
+
+.booking-details h4 {
+  margin-bottom: 10px;
+  font-size: 1.7rem; /* Slightly bigger title */
+  color: #cd9a5e;
+}
+
+.booking-details p {
+  margin: 4px 0; /* Reduced vertical spacing between lines */
+  font-size: 1rem;
+  color: #8a8a8a;
+}
+
+.booking-details strong {
+  color: #b45f3a;
+}
+
+/* Status Color Coding */
+.status {
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.status.confirmed {
+  color: #4caf50;
+}
+
+.status.pending {
+  color: #ff9800;
+}
+
+.status.cancelled {
+  color: #f44336;
+}

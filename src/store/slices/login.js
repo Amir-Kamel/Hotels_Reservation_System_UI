@@ -11,11 +11,9 @@ export const loginUser = createAsyncThunk(
       });
       console.log('Login Response:', response.data);
       const { access, refresh, user } = response.data;
-
       localStorage.setItem("access", access);
       localStorage.setItem("refresh", refresh);
       localStorage.setItem("user", JSON.stringify(user)); 
-
       return { access, refresh, user };
     } catch (error) {
       return rejectWithValue(error.response);

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRoomDetail } from "../store/slices/rooms";
 import { fetchRoomImages } from "../store/slices/room_images";
-import { removeRoomImage } from "../store/slices/room_images";
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from "react-router-dom";
+import {   userIsCustomer } from  "../utils/permissions"; 
 
 const RoomDetails = () => {
   const { _id } = useParams();
@@ -14,7 +13,6 @@ const RoomDetails = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const navigate = useNavigate();
-
   useEffect(() => {
     if (_id) {
       dispatch(fetchRoomDetail(_id));
@@ -22,13 +20,6 @@ const RoomDetails = () => {
     }
     window.scrollTo(0, 0);
   }, [dispatch, _id]);
-
-  const handleBookNow = () => {
-    if (roomDetail) {
-      navigate('/bookings', { state: { room: roomDetail } });
-    }
-  };
-
 
   if (loading) {
     return (
@@ -330,10 +321,8 @@ const RoomDetails = () => {
                 </span>
               </div>
             </div>
-            
-            <button 
-             onClick={handleBookNow}
-             style={{
+              {userIsCustomer() && (
+            <button onClick={() => navigate(`/addbooking/${_id}/`)}style={{
               backgroundColor: '#CD9A5E',
               color: '#FFFFFF',
               border: 'none',
@@ -345,8 +334,9 @@ const RoomDetails = () => {
               width: '100%',
               transition: 'background-color 0.2s ease'
             }}>
-              Book Now
+              Book Now 
             </button>
+              )}
           </div>
           
           <div style={{

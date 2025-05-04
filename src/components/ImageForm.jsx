@@ -45,7 +45,8 @@ const ImageForm = () => {
     dispatch(addImage(formData))
       .unwrap()
       .then(() => {
-        navigate(`/star/detail/${Id}`); 
+        navigate(`/hotels/detail/${Id}`); 
+        window.location.reload();
       })
       .catch((err) => {
         console.error("Error uploading image:", err);
@@ -64,7 +65,7 @@ const ImageForm = () => {
     <div className="form-container d-flex justify-content-center align-items-center m-5 bg-body">
       <div className="form-box bg-light shadow-lg rounded p-3" style={{ maxWidth: "800px", width: "100%" }}>
         <h2 className="text-primary text-center mb-4 fw-bold">
-          Upload Image   <span className="text-secondary">{hotel.name}</span>
+          Upload Image For  <span className="text-secondary">{hotel.name}</span>
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">

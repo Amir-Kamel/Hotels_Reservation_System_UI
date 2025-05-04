@@ -1,0 +1,51 @@
+/* LoginForm.css */
+
+.bg-cream {
+  background-color: #f9f5f1;
+}
+
+.text-dark {
+  color: #1a1a1a;
+}
+
+.login-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #f9f5f1;
+  border-radius: 1rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.login-title {
+  color: #1a1a1a;
+  font-size: 1.75rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.btn-primary-custom {
+  background-color: #cd9a5e;
+  border: none;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary-custom:hover {
+  background-color: #b45f3a;
+}
+
+.form-control {
+  border-radius: 0.5rem;
+  border: 1px solid #e8dfd5;
+  margin-bottom: 15px;
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+.form-control::placeholder {
+  color: #8a8a8a;
+}

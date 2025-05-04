@@ -58,6 +58,32 @@ export const createtype = createAsyncThunk(
   }
 )
 // Create a room
+// export const addRoom = createAsyncThunk(
+//   "rooms/addRoom",
+//   async (data, { rejectWithValue }) => {
+//     try {
+//       const response = await createRoom(data);
+//       return response.data;
+//     } catch (error) {
+//       console.error('Create Room Error:', error);
+//       return rejectWithValue(error.response?.data?.message || "Failed to create room");
+//     }
+//   }
+// );
+
+// // Update a room
+// export const editRoom = createAsyncThunk(
+//   "rooms/editRoom",
+//   async ({ id, data }, { rejectWithValue }) => {
+//     try {
+//       const response = await updateRoom(id, data);
+//       return response.data;
+//     } catch (error) {
+//       console.error('Update Room Error:', error);
+//       return rejectWithValue(error.response?.data?.message || "Failed to update room");
+//     }
+//   }
+// );
 export const addRoom = createAsyncThunk(
   "rooms/addRoom",
   async (data, { rejectWithValue }) => {
@@ -66,7 +92,7 @@ export const addRoom = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.error('Create Room Error:', error);
-      return rejectWithValue(error.response?.data?.message || "Failed to create room");
+      return rejectWithValue(error.response?.data || { error: "Failed to create room" });
     }
   }
 );
@@ -80,11 +106,10 @@ export const editRoom = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.error('Update Room Error:', error);
-      return rejectWithValue(error.response?.data?.message || "Failed to update room");
+      return rejectWithValue(error.response?.data || { error: "Failed to update room" });
     }
   }
 );
-
 // Delete a room
 export const removeRoom = createAsyncThunk(
   "rooms/removeRoom",
