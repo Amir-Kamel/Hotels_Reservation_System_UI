@@ -7,6 +7,8 @@ import { fetchHotels, removeHotel ,fetchHotelDetail } from '../../store/slices/h
 import { useState } from "react";
 import HotelFormModal from "../../components/HotelFormModal";
 import { userIsOwner  , userIsCustomer , userIsAdmin} from "../../utils/permissions"; // Import the userIsOwner function
+import { baseURL } from '../path/to/axiosInstance';
+
 export default function HotelDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -49,7 +51,7 @@ const handleDelete = () => {
   const firstImage =
     hotel.image && hotel.image.length > 0
       ? hotel.image[0].image.startsWith("/media/")
-        ? `http://127.0.0.1:8000${hotel.image[0].image}`
+        ? `${baseURL}${hotel.image[0].image}`
         : hotel.image[0].image
       : hotel.name;
 

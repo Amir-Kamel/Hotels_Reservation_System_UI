@@ -8,6 +8,7 @@ import SearchAndFilter from "../../components/SearchAndFilter";
 import Pagination from "../../components/Pagination";
 import { userIsOwner } from "../../utils/permissions";
 import Loader from "../../components/Loader";
+import { baseURL } from '../path/to/axiosInstance';
 
 export default function SimpleHotelListingPage() {
   const dispatch = useDispatch();
@@ -72,7 +73,7 @@ export default function SimpleHotelListingPage() {
             .filter((hotel) => hotel.image.length > 0)
             .map((hotel, index) => {
               const imageUrl = hotel.image[0].image.startsWith("/media/")
-                ? `http://127.0.0.1:8000${hotel.image[0].image}`
+                ? `${baseURL}${hotel.image[0].image}`
                 : hotel.image[0].image;
 
               return (
