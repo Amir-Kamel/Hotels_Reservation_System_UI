@@ -166,7 +166,7 @@ export default function SimpleHotelListingPage() {
               const imageUrl =
                 hotel.image.length > 0
                   ? hotel.image[0].image.startsWith("/media/")
-                    ? `http://127.0.0.1:8000${hotel.image[0].image}`
+                    ? `${baseURL}${hotel.image[0].image}`
                     : hotel.image[0].image
                   : null;
 

@@ -48,7 +48,7 @@ const Home = () => {
       <div className="cover-section text-center text-color d-flex align-items-center justify-content-center">
         <div>
           <img
-            src="src/assests/HOTEL_LOGO.svg"
+            src="/HOTEL_LOGO.svg"
             alt=""
             style={{ width: "300px", height: "200px" }}
           />

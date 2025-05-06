@@ -4,6 +4,7 @@ import { fetchRoomDetail } from "../store/slices/rooms";
 import { fetchRoomImages } from "../store/slices/room_images";
 import { useParams, useNavigate } from "react-router-dom";
 import {   userIsCustomer } from  "../utils/permissions"; 
+import { baseURL } from '../config/axios_conf';
 
 const RoomDetails = () => {
   const { _id } = useParams();
@@ -139,7 +140,7 @@ const RoomDetails = () => {
                 overflow: 'hidden'
               }}>
                 <img
-                  src={`http://127.0.0.1:8000${images[selectedImage]?.image}`}
+                  src={`${baseURL}${images[selectedImage]?.image}`}
                   alt="Room"
                   style={{
                     width: '100%',
@@ -238,7 +239,7 @@ const RoomDetails = () => {
                     }}
                   >
                     <img
-                      src={`http://127.0.0.1:8000${image.image}`}
+                      src={`${baseURL}${image.image}`}
                       alt={`Room thumbnail ${index + 1}`}
                       style={{
                         width: '100%',
