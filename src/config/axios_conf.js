@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const baseURL = process.env.NODE_ENV === 'production' 
-  ? "https://hotelsreservationsystemapi-production.up.railway.app/" 
+  ? "https://hotels-reservation-system-ui.vercel.app/" 
   : "http://127.0.0.1:8000";
 
 const axiosInstance = axios.create({
