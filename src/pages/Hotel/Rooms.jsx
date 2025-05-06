@@ -4,6 +4,7 @@ import { fetchRoomsByHotel } from "../../store/slices/rooms";
 import { useParams, useNavigate } from "react-router-dom";
 import Pagination from "../../components/Pagination"; // Import the Pagination component
 import { userIsOwner  , userIsCustomer , userIsAdmin} from "../../utils/permissions"; // Import the userIsOwner function
+
 export default function RoomsPage() {
   const navigate = useNavigate();
   const { ID } = useParams();
