@@ -254,9 +254,9 @@ const Home = () => {
                         src={
                           review.user?.image
                             ? review.user.image.startsWith("/media/")
-                              ? "src/assests/user.png"
-                              : "src/assests/user.png"
-                            : "src/assests/user.png"
+                              ? "/user.png"
+                              : "/user.png"
+                            : "/user.png"
                         }
                         alt={review.user?.name || "User"}
                         className="rounded-circle"
