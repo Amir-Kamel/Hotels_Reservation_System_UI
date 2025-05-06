@@ -4,7 +4,7 @@ const NotFound = () => {
   return (
     <div className="d-flex flex-column align-items-center justify-content-center vh-100">
       <img 
-        src="src/assests/not_found page.png" 
+         src="/not_found page.png" 
         className="img-fluid" 
         style={{ maxWidth: "400px" }} 
       />
