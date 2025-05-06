@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+// Dynamically set the base URL based on the environment
 const baseURL = process.env.NODE_ENV === 'production' 
-  ? "https://hotels-reservation-system-ui.vercel.app/" 
+  ? "https://hotels-reservation-system-api.onrender.com/" 
   : "http://127.0.0.1:8000";
 
 const axiosInstance = axios.create({
@@ -23,7 +24,6 @@ axiosInstance.interceptors.request.use((config) => {
 }, (error) => {
     return Promise.reject(error);
 });
-
 
 axiosInstance.interceptors.response.use(
     (response) => response,
@@ -52,7 +52,7 @@ axiosInstance.interceptors.response.use(
                 // Refresh token is invalid or expired
                 localStorage.removeItem('access');
                 localStorage.removeItem('refresh');
-                window.location.href = '/';
+                window.location.href = '/login';
             }
         }
 
@@ -60,8 +60,4 @@ axiosInstance.interceptors.response.use(
     }
 );
 
-
 export default axiosInstance;
-
-
-
