@@ -8,7 +8,7 @@ import SearchAndFilter from "../../components/SearchAndFilter";
 import Pagination from "../../components/Pagination";
 import { userIsOwner } from "../../utils/permissions";
 import Loader from "../../components/Loader";
-import { baseURL } from '../path/to/axiosInstance';
+import { baseURL } from '../../config/axios_conf';
 
 export default function SimpleHotelListingPage() {
   const dispatch = useDispatch();
