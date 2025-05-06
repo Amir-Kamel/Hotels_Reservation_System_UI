@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Dynamically set the base URL based on the environment
 const baseURL = process.env.NODE_ENV === 'production' 
-  ? "https://hotels-reservation-system-api.onrender.com/" 
+  ? "https://hotels-reservation-system-api.onrender.com" 
   : "http://127.0.0.1:8000";
 
 const axiosInstance = axios.create({
@@ -60,4 +60,5 @@ axiosInstance.interceptors.response.use(
     }
 );
 
+export { baseURL };
 export default axiosInstance;
