@@ -12,6 +12,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import Loader from "../components/Loader";
 import { useParams, useNavigate } from 'react-router-dom';
 import { userIsAdmin } from "../utils/permissions";
+import { baseURL } from "../config/axios_conf"; // Adjust the import path as necessary
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -122,7 +123,7 @@ const Home = () => {
                       src={
                         hotel.image.length > 0
                           ? hotel.image[0].image.startsWith("/media/")
-                            ? `http://127.0.0.1:8000${hotel.image[0].image}`
+                            ? `${baseURL}${hotel.image[0].image}`
                             : hotel.image[0].image
                           : "https://via.placeholder.com/300x200"
                       }
