@@ -52,7 +52,7 @@ axiosInstance.interceptors.response.use(
                     // 🚫 Don't redirect if it's a public page
                     const isPublicPath = originalRequest.url === '/' || originalRequest.url.startsWith('/hotels/');
                     if (!isPublicPath) {
-                        window.location.href = '/login';
+                        window.location.href = '/';
                     }
                 }
             } catch (err) {
@@ -62,7 +62,7 @@ axiosInstance.interceptors.response.use(
                 // 🚫 Don't redirect if it's a public page
                 const isPublicPath = originalRequest.url === '/' || originalRequest.url.startsWith('/hotels/');
                 if (!isPublicPath) {
-                    window.location.href = '/login';
+                    window.location.href = '/';
                 }
             }
         }
