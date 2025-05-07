@@ -9,11 +9,11 @@ const axiosInstance = axios.create({
     baseURL: baseURL,
     headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': `Bearer ${token}`
     },
     timeout: 10000,
-})
+});
 
+// Request interceptor to attach token
 axiosInstance.interceptors.request.use((config) => {
     const token = localStorage.getItem('access');
     if (token) {
@@ -25,13 +25,16 @@ axiosInstance.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
+// Response interceptor with public page handling
 axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
 
+        // Check if request is already retried
         if (error.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
+
             try {
                 const refresh = localStorage.getItem('refresh');
                 if (refresh) {
@@ -41,18 +44,26 @@ axiosInstance.interceptors.response.use(
                     localStorage.setItem('access', response.data.access);
                     axiosInstance.defaults.headers['Authorization'] = `Bearer ${response.data.access}`;
                     originalRequest.headers['Authorization'] = `Bearer ${response.data.access}`;
-                    return axiosInstance(originalRequest); // Retry the original request
+                    return axiosInstance(originalRequest); // Retry original request
                 } else {
-                    // No refresh token available
                     localStorage.removeItem('access');
                     localStorage.removeItem('refresh');
-                    window.location.href = '/login';
+
+                    // 🚫 Don't redirect if it's a public page
+                    const isPublicPath = originalRequest.url === '/' || originalRequest.url.startsWith('/hotels/');
+                    if (!isPublicPath) {
+                        window.location.href = '/login';
+                    }
                 }
             } catch (err) {
-                // Refresh token is invalid or expired
                 localStorage.removeItem('access');
                 localStorage.removeItem('refresh');
-                window.location.href = '/login';
+
+                // 🚫 Don't redirect if it's a public page
+                const isPublicPath = originalRequest.url === '/' || originalRequest.url.startsWith('/hotels/');
+                if (!isPublicPath) {
+                    window.location.href = '/login';
+                }
             }
         }
 
