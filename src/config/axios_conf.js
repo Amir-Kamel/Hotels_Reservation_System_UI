@@ -46,13 +46,13 @@ axiosInstance.interceptors.response.use(
                     // No refresh token available
                     localStorage.removeItem('access');
                     localStorage.removeItem('refresh');
-                    window.location.href = '/';
+                    window.location.href = '/login';
                 }
             } catch (err) {
                 // Refresh token is invalid or expired
                 localStorage.removeItem('access');
                 localStorage.removeItem('refresh');
-                window.location.href = '/';
+                window.location.href = '/login';
             }
         }
 
