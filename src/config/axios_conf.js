@@ -29,6 +29,7 @@ axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
+        console.log('Error response:', error.response);
 
         if (error.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
@@ -47,7 +48,7 @@ axiosInstance.interceptors.response.use(
                     // No refresh token available
                     localStorage.removeItem('access');
                     localStorage.removeItem('refresh');
-                    window.location.href = '/';
+                    window.location.href = '/login';
                 }
             } catch (err) {
                 // Refresh token is invalid or expired
