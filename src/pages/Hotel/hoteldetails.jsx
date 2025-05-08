@@ -8,6 +8,7 @@ import { useState } from "react";
 import HotelFormModal from "../../components/HotelFormModal";
 import { userIsOwner  , userIsCustomer , userIsAdmin} from "../../utils/permissions"; // Import the userIsOwner function
 import { baseURL } from '../../config/axios_conf'; // Adjust the import path as necessary
+import { baseURL } from '../../config/axios_conf';
 
 export default function HotelDetails() {
   const { id } = useParams();
@@ -107,7 +108,7 @@ const handleDelete = () => {
               <Carousel.Item key={idx}>
                 <img
                   className="d-block w-100"
-                  src={img.image.startsWith("/media/") ? `http://127.0.0.1:8000${img.image}` : img.image}
+                  src={img.image.startsWith("/media/") ? `${baseURL}${img.image}` : img.image}
                   alt={`Slide ${idx}`}
                   style={{ maxHeight: '400px', objectFit: 'cover' }}
                 />
