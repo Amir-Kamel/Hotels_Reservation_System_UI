@@ -10,24 +10,23 @@ function Login() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [formErrors, setFormErrors] = useState({});
+  const [formErrors,setFormErrors] = useState({});
 
-  useEffect(() => {
-    if (error) {
-      setFormErrors(error);
-      localStorage.setItem("error", error);
+  useEffect(()=>{
+    if(error){
+      setFormErrors(error)
+      console.log("the log in error is ",error)
     }
-  }, [error]);
+  },[error])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const result = await dispatch(loginUser({ username, password }));
+
     if (loginUser.fulfilled.match(result)) {
-      setFormErrors({});
-      navigate("/");
-    } else {
-      console.log("Login failed");
-    }
+      navigate('/');
+      window.location.reload();
+    } 
   };
 
   return (
@@ -58,18 +57,10 @@ function Login() {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
-          {formErrors[0] && (
-            <p className="text-danger mt-2 text-center">
-              {" "}
-              Username or password are not correct.{" "}
-            </p>
-          )}
+          {error && <p className="text-danger mt-2 text-center">{error}</p>}
         </form>
-        <p className="mt-3 text-center">
-          Don't have an account?{" "}
-          <a href="/register" className="text-primary">
-            Register now
-          </a>
+          <p className="mt-3 text-center">
+          Don't have an account? <a href="/register" className="text-primary">Register now</a>
         </p>
       </div>
     </div>
