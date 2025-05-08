@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCurrentUser, editCurrentUser } from "../../store/slices/accounts";
+import {
+  fetchCurrentUser,
+  editCurrentUser,
+  clearError,
+} from "../../store/slices/accounts";
 import { fetchOwnerHotelBookings } from "../../store/slices/booking";
 import { Modal, Button, Form, Table, Badge } from "react-bootstrap";
 
@@ -8,6 +12,8 @@ export default function HotelOwner() {
   const dispatch = useDispatch();
   const { userDetail } = useSelector((state) => state.accounts);
   const { bookings } = useSelector((state) => state.bookings);
+  const { loading, formError } = useSelector((state) => state.accounts);
+  console.log("formError from hotel owner page", formError);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -59,9 +65,20 @@ export default function HotelOwner() {
 
   const handleFormSuccess = async (e) => {
     e.preventDefault();
-    await dispatch(editCurrentUser(formData));
-    dispatch(fetchCurrentUser());
-    setshowUserDataEditForm(false);
+    try {
+      const resultAction = await dispatch(editCurrentUser(formData));
+      if (editCurrentUser.fulfilled.match(resultAction)) {
+        console.log("User updated successfully:", resultAction.payload);
+        setshowUserDataEditForm(false);
+        dispatch(fetchCurrentUser());
+        clearError();
+      }
+    } catch (error) {
+      console.error("Failed to update user:", error);
+      // await dispatch(editCurrentUser(formData));
+      // dispatch(fetchCurrentUser());
+      // setshowUserDataEditForm(false);
+    }
   };
 
   const getStatusBadge = (status) => {
@@ -228,6 +245,9 @@ export default function HotelOwner() {
                         setFormData({ ...formData, username: e.target.value })
                       }
                     />
+                    {formError && (
+                      <p style={{ color: "red" }}>{formError.username}</p>
+                    )}
                   </Form.Group>
 
                   <Form.Group controlId="email">
@@ -241,6 +261,9 @@ export default function HotelOwner() {
                         setFormData({ ...formData, email: e.target.value })
                       }
                     />
+                    {formError && (
+                      <p style={{ color: "red" }}>{formError.email}</p>
+                    )}
                   </Form.Group>
 
                   <Form.Group controlId="phone">
@@ -254,6 +277,9 @@ export default function HotelOwner() {
                         setFormData({ ...formData, phone: e.target.value })
                       }
                     />
+                    {formError && (
+                      <p style={{ color: "red" }}>{formError.phone}</p>
+                    )}
                   </Form.Group>
 
                   <Form.Group controlId="password">
@@ -267,6 +293,9 @@ export default function HotelOwner() {
                         setFormData({ ...formData, password: e.target.value })
                       }
                     />
+                    {formError && (
+                      <p style={{ color: "red" }}>{formError.password}</p>
+                    )}
                   </Form.Group>
 
                   <Form.Group controlId="password2">
@@ -279,6 +308,9 @@ export default function HotelOwner() {
                         setFormData({ ...formData, password2: e.target.value })
                       }
                     />
+                    {formError && (
+                      <p style={{ color: "red" }}>{formError.password2}</p>
+                    )}
                   </Form.Group>
 
                   <Button variant="primary" type="submit" className="mt-3">

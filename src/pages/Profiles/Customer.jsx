@@ -8,72 +8,91 @@ import {
 import { fetchUserBookings } from "../../store/slices/booking";
 import { Link } from "react-router-dom";
 import { Modal, Button, Form } from "react-bootstrap";
-import './Customer.css'; // Import the CSS
+import "./Customer.css"; // Import the CSS
 
 export default function CustomerProfile() {
   const dispatch = useDispatch();
-  const { userDetail, loading, error } = useSelector((state) => state.accounts);
+  const { userDetail, loading, formError } = useSelector(
+    (state) => state.accounts
+  );
+  console.log(userDetail);
+  const [formErrors, setFormErrors] = useState({});
   const { bookings } = useSelector((state) => state.bookings);
-  
+
   const [showModal, setShowModal] = useState(false);
-  const [viewType, setViewType] = useState('grid'); // 'grid' or 'table'
-  const [filterStatus, setFilterStatus] = useState('all');
-  
+  const [viewType, setViewType] = useState("grid"); // 'grid' or 'table'
+  const [filterStatus, setFilterStatus] = useState("all");
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    phone: "",
+    password: "",
+    password2: "",
+  });
+
   // Get filtered bookings based on status
-  const filteredBookings = bookings?.filter(booking => 
-    filterStatus === 'all' ? true : booking.status === filterStatus
+  const filteredBookings = bookings?.filter((booking) =>
+    filterStatus === "all" ? true : booking.status === filterStatus
   );
 
   useEffect(() => {
     dispatch(fetchCurrentUser());
+    dispatch(fetchUserBookings());
   }, [dispatch]);
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const resultAction = await dispatch(editCurrentUser(formData));
+      if (editCurrentUser.fulfilled.match(resultAction)) {
+        setShowModal(false);
+        dispatch(fetchCurrentUser());
+        setFormErrors({});
+        console.log("Profile updated successfully");
+      } else {
+        console.error("Failed to update profile");
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
 
   useEffect(() => {
     if (userDetail) {
-      dispatch(fetchUserBookings());
+      setFormData({
+        username: userDetail.username || "",
+        email: userDetail.email || "",
+        phone: userDetail.phone || "",
+        password: "",
+        password2: "",
+      });
     }
-  }, [dispatch, userDetail]);
+  }, [userDetail]);
 
   useEffect(() => {
-    if (error) {
-      const timer = setTimeout(() => {
-        dispatch(clearError());
-      }, 5000);
-      return () => clearTimeout(timer);
+    if (formError) {
+      setFormErrors(formError);
+      console.log(formError);
     }
-  }, [error, dispatch]);
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    const formData = {
-      username: document.querySelector('input[name="name"]').value,
-      email: document.querySelector('input[name="email"]').value,
-      phone: document.querySelector('input[name="phone"]').value,
-      password: document.querySelector('input[name="Password"]').value,
-      password2: document.querySelector('input[name="confirmPassword"]').value,
-    };
-    dispatch(editCurrentUser(formData));
-    setShowModal(false);
-  };
+  }, [formError]);
 
   // Function to format date for better display
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    const options = { year: "numeric", month: "short", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
   if (loading) {
-    return <div className="loading-state">Loading your profile information...</div>;
+    return (
+      <div className="loading-state">Loading your profile information...</div>
+    );
   }
 
   return (
     <div className="profile-container">
       <div className="profile-header">
         <h1>Your Profile Dashboard</h1>
-        <Button 
-          className="btn-custom"
-          onClick={() => setShowModal(true)}
-        >
+        <Button className="btn-custom" onClick={() => setShowModal(true)}>
           Edit Profile
         </Button>
       </div>
@@ -89,16 +108,16 @@ export default function CustomerProfile() {
               </div>
               <div className="stat-card">
                 <div className="stat-value">
-                  {bookings?.filter(b => b.status === 'confirmed').length || 0}
+                  {bookings?.filter((b) => b.status === "confirmed").length ||
+                    0}
                 </div>
                 <div className="stat-label">Confirmed</div>
               </div>
               <div className="stat-card">
                 <div className="stat-value">
-                  {bookings?.filter(b => b.status === 'pending').length || 0}
+                  {bookings?.filter((b) => b.status === "pending").length || 0}
                 </div>
                 <div className="stat-label">Pending</div>
-                
               </div>
               <div className="info-item">
                 <strong>Name</strong>
@@ -108,18 +127,19 @@ export default function CustomerProfile() {
 
             {/* User Information */}
             <div className="user-info-card">
-              
               <div className="info-item">
                 <strong>Email</strong>
-                <p className="text-sm truncate overflow-hidden">{userDetail.email}</p>
+                <p className="text-sm truncate overflow-hidden">
+                  {userDetail.email}
+                </p>
               </div>
               <div className="info-item">
                 <strong>Phone</strong>
-                <p>{userDetail.phone || 'Not provided'}</p>
+                <p>{userDetail.phone || "Not provided"}</p>
               </div>
               <div className="info-item">
                 <strong>Address</strong>
-                <p>{userDetail.address || 'Not provided'}</p>
+                <p>{userDetail.address || "Not provided"}</p>
               </div>
               <div className="info-item">
                 <strong>Account Type</strong>
@@ -146,9 +166,17 @@ export default function CustomerProfile() {
                       type="text"
                       name="name"
                       placeholder="Name"
-                      defaultValue={userDetail.username}
+                      value={formData.username}
+                      onChange={(e) =>
+                        setFormData({ ...formData, username: e.target.value })
+                      }
                       className="form-control"
                     />
+                    {formErrors?.username?.[0] && (
+                      <div className="invalid-feedback d-block">
+                        {formErrors.username}
+                      </div>
+                    )}
                   </Form.Group>
                   <Form.Group className="form-group">
                     <Form.Label>Email</Form.Label>
@@ -156,9 +184,17 @@ export default function CustomerProfile() {
                       type="email"
                       name="email"
                       placeholder="Email"
-                      defaultValue={userDetail.email}
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
                       className="form-control"
                     />
+                    {formErrors?.email?.[0] && (
+                      <div className="invalid-feedback d-block">
+                        {formErrors.email}
+                      </div>
+                    )}
                   </Form.Group>
                   <Form.Group className="form-group">
                     <Form.Label>Phone</Form.Label>
@@ -166,9 +202,17 @@ export default function CustomerProfile() {
                       type="text"
                       name="phone"
                       placeholder="Phone"
-                      defaultValue={userDetail.phone}
+                      value={formData.phone}
+                      onChange={(e) =>
+                        setFormData({ ...formData, phone: e.target.value })
+                      }
                       className="form-control"
                     />
+                    {formErrors?.phone?.[0] && (
+                      <div className="invalid-feedback d-block">
+                        {formErrors.phone}
+                      </div>
+                    )}
                   </Form.Group>
                   <Form.Group className="form-group">
                     <Form.Label>New Password</Form.Label>
@@ -177,7 +221,15 @@ export default function CustomerProfile() {
                       name="Password"
                       placeholder="New Password"
                       className="form-control"
+                      onChange={(e) =>
+                        setFormData({ ...formData, password: e.target.value })
+                      }
                     />
+                    {formErrors?.password?.[0] && (
+                      <div className="invalid-feedback d-block">
+                        {formErrors.password}
+                      </div>
+                    )}
                   </Form.Group>
                   <Form.Group className="form-group">
                     <Form.Label>Confirm Password</Form.Label>
@@ -186,7 +238,15 @@ export default function CustomerProfile() {
                       name="confirmPassword"
                       placeholder="Confirm Password"
                       className="form-control"
+                      onChange={(e) =>
+                        setFormData({ ...formData, password2: e.target.value })
+                      }
                     />
+                    {formErrors?.password2?.[0] && (
+                      <div className="invalid-feedback d-block">
+                        {formErrors.password2}
+                      </div>
+                    )}
                   </Form.Group>
                   <div className="form-actions">
                     <Button
@@ -204,35 +264,29 @@ export default function CustomerProfile() {
               </Modal.Body>
             </Modal>
 
-            {error && (
-              <div className="alert alert-danger" role="alert">
-                {error}
-              </div>
-            )}
-
             {/* Bookings Section */}
             <div className="bookings-section">
               <div className="bookings-section-header">
                 <h2>Your Bookings</h2>
                 <div className="view-toggle">
-                  <button 
-                    className={viewType === 'grid' ? 'active' : ''} 
-                    onClick={() => setViewType('grid')}
+                  <button
+                    className={viewType === "grid" ? "active" : ""}
+                    onClick={() => setViewType("grid")}
                   >
                     Grid View
                   </button>
-                  <button 
-                    className={viewType === 'table' ? 'active' : ''} 
-                    onClick={() => setViewType('table')}
+                  <button
+                    className={viewType === "table" ? "active" : ""}
+                    onClick={() => setViewType("table")}
                   >
                     Table View
                   </button>
                 </div>
               </div>
-              
+
               <div className="filter-controls">
-                <select 
-                  className="filter-select" 
+                <select
+                  className="filter-select"
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value)}
                 >
@@ -243,7 +297,7 @@ export default function CustomerProfile() {
               </div>
 
               {bookings && bookings.length > 0 ? (
-                viewType === 'grid' ? (
+                viewType === "grid" ? (
                   // Grid View
                   <div className="bookings-grid">
                     {filteredBookings.map((booking) => (
@@ -262,14 +316,18 @@ export default function CustomerProfile() {
                               src={booking.hotel_image}
                               alt={booking.hotel_name}
                             />
-                            <span className={`booking-status ${booking.status}`}>
+                            <span
+                              className={`booking-status ${booking.status}`}
+                            >
                               {booking.status}
                             </span>
                           </div>
                           <div className="booking-details">
                             <h3 className="hotel-name">{booking.hotel_name}</h3>
-                            <p className="hotel-address">{booking.hotel_address}</p>
-                            
+                            <p className="hotel-address">
+                              {booking.hotel_address}
+                            </p>
+
                             <div className="booking-info">
                               <div className="booking-date">
                                 <strong>Check In</strong>
@@ -280,9 +338,11 @@ export default function CustomerProfile() {
                                 {formatDate(booking.check_out)}
                               </div>
                             </div>
-                            
+
                             <div className="price-rating">
-                              <span className="price">${booking.total_price}</span>
+                              <span className="price">
+                                ${booking.total_price}
+                              </span>
                               <span className="booking-date">
                                 <strong>Booked on</strong>
                                 {formatDate(booking.created_at)}
@@ -308,19 +368,33 @@ export default function CustomerProfile() {
                         {filteredBookings.map((booking) => (
                           <tr key={booking.id}>
                             <td className="hotel-cell">
-                              <span className="hotel-name">{booking.hotel_name}</span>
-                              <span className="hotel-address">{booking.hotel_address}</span>
+                              <span className="hotel-name">
+                                {booking.hotel_name}
+                              </span>
+                              <span className="hotel-address">
+                                {booking.hotel_address}
+                              </span>
                             </td>
                             <td className="dates-cell">
-                              <span>Check-in: {formatDate(booking.check_in)}</span>
-                              <span>Check-out: {formatDate(booking.check_out)}</span>
-                              <span className="hotel-rating">Booked: {formatDate(booking.created_at)}</span>
+                              <span>
+                                Check-in: {formatDate(booking.check_in)}
+                              </span>
+                              <span>
+                                Check-out: {formatDate(booking.check_out)}
+                              </span>
+                              <span className="hotel-rating">
+                                Booked: {formatDate(booking.created_at)}
+                              </span>
                             </td>
                             <td className="price-cell">
-                              <span className="price-amount">${booking.total_price}</span>
+                              <span className="price-amount">
+                                ${booking.total_price}
+                              </span>
                             </td>
                             <td>
-                              <span className={`status-badge ${booking.status}`}>
+                              <span
+                                className={`status-badge ${booking.status}`}
+                              >
                                 {booking.status}
                               </span>
                             </td>
@@ -333,7 +407,9 @@ export default function CustomerProfile() {
                                       : "#"
                                   }
                                 >
-                                  <button className="icon-button view">View Details</button>
+                                  <button className="icon-button view">
+                                    View Details
+                                  </button>
                                 </Link>
                               </div>
                             </td>

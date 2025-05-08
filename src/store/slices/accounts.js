@@ -110,7 +110,7 @@ export const createUser = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.error("Register User", error.response.data);
-      return rejectWithValue(error.response?.data|| "Failed to register user");
+      return rejectWithValue(error.response?.data || "Failed to register user");
     }
   }
 );
@@ -123,9 +123,7 @@ export const createUserForAdmin = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.error("Register User Error:", error.response.data);
-      return rejectWithValue(
-        error.response.data || "Failed to register user"
-      );
+      return rejectWithValue(error.response?.data || "Failed to register user");
     }
   }
 );
@@ -139,7 +137,7 @@ export const editCurrentUser = createAsyncThunk(
     } catch (error) {
       console.error("Update Current User Error:", error);
       return rejectWithValue(
-        error.response?.data?.message || "Failed to update current user"
+        error.response?.data || "Failed to update user data"
       );
     }
   }
@@ -152,9 +150,9 @@ export const editCurrentAdmindata = createAsyncThunk(
       const response = await editCurrentAdmin(data);
       return response.data;
     } catch (error) {
-      console.error("Update Current User Error:", error);
+      console.error("Update Current User Error:", error.response.data);
       return rejectWithValue(
-        error.response?.data?.message || "Failed to update current user"
+        error.response?.data || "Failed to update current user"
       );
     }
   }
@@ -165,7 +163,7 @@ const initialState = {
   users: [],
   loading: false,
   error: null,
-  formError:null,
+  formError: null,
   userDetail: null,
 };
 
@@ -247,7 +245,7 @@ const accountsSlice = createSlice({
       })
       .addCase(editCurrentAdmindata.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.formError = action.payload;
       })
 
       // Edit user
@@ -322,7 +320,7 @@ const accountsSlice = createSlice({
       })
       .addCase(editCurrentUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.formError = action.payload;
       });
   },
 });

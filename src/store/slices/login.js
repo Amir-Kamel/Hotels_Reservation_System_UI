@@ -1,38 +1,38 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../config/axios_conf";
 
 export const loginUser = createAsyncThunk(
-  'auth/loginUser',
+  "auth/loginUser",
   async ({ username, password }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post('/accounts/login/', {
+      const response = await axiosInstance.post("/accounts/login/", {
         username,
         password,
       });
-      console.log('Login Response:', response.data);
+      console.log("Login Response:", response.data);
       const { access, refresh, user } = response.data;
       localStorage.setItem("access", access);
       localStorage.setItem("refresh", refresh);
-      localStorage.setItem("user", JSON.stringify(user)); 
+      localStorage.setItem("user", JSON.stringify(user));
       return { access, refresh, user };
     } catch (error) {
-      return rejectWithValue(error.response);
+      return rejectWithValue(error.response?.data);
     }
   }
 );
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState: {
-    token: localStorage.getItem('access') || null,
+    token: localStorage.getItem("access") || null,
     loading: false,
     error: null,
   },
   reducers: {
     logout(state) {
-      localStorage.removeItem('access');
-      localStorage.removeItem('refresh');
-      localStorage.removeItem('user');
+      localStorage.removeItem("access");
+      localStorage.removeItem("refresh");
+      localStorage.removeItem("user");
       state.token = null;
     },
   },
@@ -48,11 +48,10 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload ? action.payload.non_field_errors[0] : 'Login failed';
+        state.error = "Username or password are not correct";
       });
   },
 });
 
 export const { logout } = authSlice.actions;
 export default authSlice.reducer;
-
