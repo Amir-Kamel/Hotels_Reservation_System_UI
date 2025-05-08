@@ -8,7 +8,7 @@ import { useState } from "react";
 import HotelFormModal from "../../components/HotelFormModal";
 import { userIsOwner  , userIsCustomer , userIsAdmin} from "../../utils/permissions"; // Import the userIsOwner function
 import { baseURL } from '../../config/axios_conf'; // Adjust the import path as necessary
-import { baseURL } from '../../config/axios_conf';
+
 
 export default function HotelDetails() {
   const { id } = useParams();
